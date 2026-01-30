@@ -1,7 +1,7 @@
 #include <esp_now.h>
 #include <WiFi.h>
 
-// ALICI KARTININ MAC ADRESİ
+
 uint8_t broadcastAddress[] = {0x6C, 0xC8, 0x40, 0x34, 0xBC, 0x10};
 
 typedef struct struct_message {
@@ -14,7 +14,7 @@ esp_now_peer_info_t peerInfo;
 
 float currentX = 90;
 float currentY = 90;
-float speed = 1.0; // Hareket hızı (Yavaş gelirse 2.0 yapabilirsin)
+float speed = 1.0; 
 
 void setup() {
   Serial.begin(115200);
@@ -41,16 +41,14 @@ void loop() {
 
   bool moving = false;
 
-  // X Ekseni (Pan) - Geniş ölü bölge
+
   if (readX > 3200) { currentX += speed; moving = true; } 
   else if (readX < 800) { currentX -= speed; moving = true; }
 
-  // Y Ekseni (Tilt) - AKMAYI DURDURMAK İÇİN EŞİĞİ YÜKSELTTİK
-  // Eğer motor kendi kendine aşağı/yukarı gidiyorsa 3200'ü 3500 yap
   if (readY > 3200) { currentY += speed; moving = true; } 
   else if (readY < 800) { currentY -= speed; moving = true; }
 
-  // Açı sınırları
+
   currentX = constrain(currentX, 0, 180);
   currentY = constrain(currentY, 0, 180);
 
