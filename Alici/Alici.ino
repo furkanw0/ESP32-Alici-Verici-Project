@@ -13,7 +13,7 @@ typedef struct struct_message {
 struct_message incomingReadings;
 float targetX = 90, targetY = 90;
 float currentX = 90, currentY = 90;
-float smoothing = 0.1; // 0.01 ile 0.5 arası. Küçüldükçe pürüzsüzleşir ama yavaşlar.
+float smoothing = 0.1; 
 
 void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
   memcpy(&incomingReadings, incomingData, sizeof(incomingReadings));
@@ -33,12 +33,12 @@ void setup() {
 }
 
 void loop() {
-  // PÜRÜZSÜZ HAREKET MATEMATİĞİ (Interpolation)
+
   currentX += (targetX - currentX) * smoothing;
   currentY += (targetY - currentY) * smoothing;
 
   panServo.write((int)currentX);
   tiltServo.write((int)currentY);
   
-  delay(15); // Döngü hızı pürüzsüzlük için sabit kalmalı
+  delay(15); 
 }
